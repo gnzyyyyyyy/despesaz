@@ -1,35 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET!;
 
 export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
-  let isValid = false;
-
-  if (token) {
-    try {
-      jwt.verify(token, JWT_SECRET);
-      isValid = true;
-    } catch {
-      isValid = false;
-    }
-  }
+  const isAuthenticated = !!token;
 
   // Protect dashboard
   if (req.nextUrl.pathname.startsWith("/dashboard")) {
-    if (!isValid) {
+    if (!isAuthenticated) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
 
-  // Prevent login if already authenticated (ONLY if valid)
+  // Prevent login if already authenticated
   if (req.nextUrl.pathname.startsWith("/login")) {
-    if (isValid) {
+    if (isAuthenticated) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
   }
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/dashboard/:path*", "/expenses/:path*", "/login"],
+};

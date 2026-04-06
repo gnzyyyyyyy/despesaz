@@ -21,7 +21,7 @@ export default function LoginForm() {
         try {
             await loginUser({ username, password });
 
-            router.push("/dashboard");
+            router.replace("/dashboard");
         } catch ( error: any ) {
             setError(error.message);
         } finally {
