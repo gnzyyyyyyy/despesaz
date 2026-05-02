@@ -1,10 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/src/lib/mongodb";
 import { getUserFromToken } from "@/src/lib/auth";
-import { createTransaction, getTransaction } from "@/src/services/transaction.service";
+import { updateBudget, deleteBudget } from "@/src/services/budget.service";
 
-// Create Transaction
-export async function POST(req: NextRequest) {
+// Update Budget
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
     try {
         await connectDB();
 
@@ -20,23 +20,16 @@ export async function POST(req: NextRequest) {
 
         const body = await req.json();
 
-        const transaction = await createTransaction({
-            title: body.title,
-            amount: Number(body.amount),
-            category: body.category,
-            type: body.type || "expense",
-            date: body.date? new Date(body.date) : new Date(),
-            userId: userID
-        });
+        const transaction = await updateBudget(params.id, userID, body);
         return NextResponse.json(transaction, { status: 200 });
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ message: "Internal server error: Failed to create transaction" }, { status: 500 });
-    }   
+        return NextResponse.json({ message: "Internal server error: Failed to update transaction" }, { status: 500 });
+    }
 }
 
-// Get All Transaction
-export async function GET(req: NextRequest) {
+// Delete Budget
+export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
         await connectDB();
 
@@ -50,10 +43,12 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ message: "Invalid token" }, { status: 401 });
         }
 
-        const transactions = await getTransaction(userID);
-        return NextResponse.json(transactions, { status: 200 });
+        const params = await context.params;
+
+        const transaction = await deleteBudget(params.id, userID);
+        return NextResponse.json(transaction, { status: 200 });
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ message: "Internal server error: Failed to get transaction" }, { status: 500 });
-    }   
+        return NextResponse.json({ message: "Internal server error: Failed to delete transaction" }, { status: 500 });
+    }
 }

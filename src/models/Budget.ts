@@ -1,25 +1,11 @@
 import mongoose, { Schema, model, models } from "mongoose";
 
-const transactionSchema = new mongoose.Schema({
+const budgetSchema = new mongoose.Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
         index: true
-    },
-    title: {
-        type: String,
-        required: true
-    },
-    amount: {
-        type: Number,
-        required: true
-    },
-    type: {
-        type: String,
-        required: true,
-        enum: ['income', 'expense'],
-        default: 'expense'
     },
     category: {
         type: String,
@@ -27,13 +13,22 @@ const transactionSchema = new mongoose.Schema({
         enum: ['housing', 'food', 'utilities', 'transportation', 'entertainment', 'health_care', 'miscellaneous', 'salary', 'investments', 'gifts', 'refunds', 'other'],
         default: 'other'
     },
-    date: {
+    limitAmount: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    month: {
         type: Date,
-        default: Date.now,
         required: true
+    },
+    notes: {
+        type: String,
+        trim: true
     },
 }, {
     timestamps: true
-})
+});
 
-export const Transaction = models.Transaction || model('Transaction', transactionSchema);
+budgetSchema.index({ userId: 1, category: 1, month: 1 }, { unique: true });
+export const Budget = models.Budget || model('Budget', budgetSchema);

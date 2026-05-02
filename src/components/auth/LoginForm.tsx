@@ -43,7 +43,7 @@ export default function LoginForm() {
                         placeholder="Enter your username..."
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="w-full h-11 px-4 border rounded-md"
+                        className="w-full h-11 px-4 border rounded-md text-[#0e80ad]"
                     />
                 </div>
                 <div>
@@ -53,7 +53,7 @@ export default function LoginForm() {
                         placeholder="Enter your password..."
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full h-11 px-4 border rounded-md"
+                        className="w-full h-11 px-4 border rounded-md text-[#0e80ad]"
                     />
                 </div>
 
@@ -88,7 +88,7 @@ export default function LoginForm() {
                 <img src="/login/facebook.png" className="w-20 h-14 p-2 rounded bg-gray-100 hover:scale-110 transition cursor-pointer" />
             </div>
 
-            <p className="text-center text-xs">
+            <p className="text-center text-xs text-gray-500">
                 Don't have an account?{" "}
                 <span className="font-semibold cursor-pointer">
                     Register here!

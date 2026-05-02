@@ -29,7 +29,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
 }
 
 // Delete Transaction
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
     try {
         await connectDB();
 
@@ -43,6 +43,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
             return NextResponse.json({ message: "Invalid token" }, { status: 401 });
         }
 
+        const params = await context.params;
+        
         const transaction = await deleteTransaction(params.id, userID);
         return NextResponse.json(transaction, { status: 200 });
     } catch (error) {

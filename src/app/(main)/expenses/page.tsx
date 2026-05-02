@@ -35,7 +35,7 @@ export default function ExpensesPage() {
 
     return (
         <div>
-        <h1 className="text-2xl font-bold mb-6">Expenses</h1>
+        <h1 className="text-2xl font-bold mb-6 text-black">Expenses</h1>
 
         <ExpenseForm onSubmit={handleSubmit} />
 

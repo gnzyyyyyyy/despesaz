@@ -18,26 +18,26 @@ export default function ExpenseForm({ onSubmit }: any) {
                 onSubmit(form);
                 setForm({title: "", amount: "", type: "", category: "", date: ""})
             }}
-                className="bg-white rounded-2xl p-5 shadow-sm flex flex-wrap gap-4 items-center"
+                className="bg-white rounded-2xl p-5 shadow-sm flex flex-wrap gap-4 items-center text-gray-500"
             >
                 <input 
                     placeholder="Transaction name..." 
                     value={form.title} 
                     onChange={(e) => setForm({ ...form, title: e.target.value })}
-                    className="flex-1 min-w-[180px] p-3 border rounded-lg focus:ring-2 focus:ring-blue-200"
+                    className="flex-1 min-w-[180px] p-3 border rounded-lg focus:ring-2 focus:ring-blue-200 text-gray-500"
                 />
 
                 <input 
                     placeholder="Amount..." 
                     value={form.amount} 
                     onChange={(e) => setForm({ ...form, amount: e.target.value })}
-                    className="flex-1 min-w-[140px] p-3 border rounded-lg"
+                    className="flex-1 min-w-[140px] p-3 border rounded-lg text-gray-500"
                 />
 
                 <select 
                     value={form.type} 
                     onChange={(e) => setForm({ ...form, type: e.target.value })}
-                    className="p-3 border rounded-lg"
+                    className="p-3 border rounded-lg text-gray-500"
                 >
                     <option value="">Type</option>
                     <option value="expense">Expense</option>
@@ -47,7 +47,7 @@ export default function ExpenseForm({ onSubmit }: any) {
                 <select 
                     value={form.category} 
                     onChange={(e) => setForm({ ...form, category: e.target.value })}
-                    className="p-3 border rounded-lg"
+                    className="p-3 border rounded-lg text-gray-500"
                 >
                     <option value="">Category</option>
                     <option value="housing">Housing</option>
@@ -64,7 +64,8 @@ export default function ExpenseForm({ onSubmit }: any) {
                     <option value="other">Other</option>
                 </select>
 
-                <input 
+                <input
+                    type="date" 
                     placeholder="Date..." 
                     value={form.date} 
                     onChange={(e) => setForm({ ...form, date: e.target.value })}

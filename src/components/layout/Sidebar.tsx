@@ -25,7 +25,7 @@ const menu = [
     },
     {
         name: "Budget Planning",
-        href: "/budgetPlanning",
+        href: "/budget",
         icon: budgetPlanningLogo
     },
     {
@@ -33,17 +33,7 @@ const menu = [
         href: "/report",
         icon: reportsLogo
     },
-    {
-        name: "Settings",
-        href: "/setting",
-        icon: settingsLogo
-    },
-    {
-        name: "Help",
-        href: "/help",
-        icon: helpLogo
-    },
-];
+]
 
 export default function Sidebar() {
     const pathname = usePathname();
