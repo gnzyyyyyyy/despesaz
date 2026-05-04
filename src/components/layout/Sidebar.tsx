@@ -30,7 +30,7 @@ const menu = [
     },
     {
         name: "Reports",
-        href: "/report",
+        href: "/reports",
         icon: reportsLogo
     },
 ]
