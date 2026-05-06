@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import BudgetForm from "@/src/components/budget/BudgetForm";
 import BudgetList from "@/src/components/budget/BudgetList";
 import { getBudgets, createBudget, deleteBudget } from "@/src/lib/api";
+import { updateBudget } from "@/src/lib/api";
 
 export default function BudgetPage() {
     const [budgets, setBudgets] = useState([]);
     const [showForm, setShowForm] = useState(false);
+    const [editingBudget, setEditingBudget] = useState<any>(null);
 
     const fetchBudgets = async () => {
         const data = await getBudgets();
@@ -28,6 +30,22 @@ export default function BudgetPage() {
         }
     };
 
+    const handleEdit = (budget: any) => {
+        setEditingBudget(budget);
+        setShowForm(true);
+    };
+
+    const handleUpdate = async (form: any) => {
+        try {
+            await updateBudget(editingBudget._id, form);
+            fetchBudgets();
+            setShowForm(false);
+            setEditingBudget(null);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+    
     const handleDelete = async (id: string) => {
         try {
             await deleteBudget(id);
@@ -51,10 +69,15 @@ export default function BudgetPage() {
         </div>
 
         {/* Form */}
-        {showForm && <BudgetForm onSubmit={handleCreate} />}
+        {showForm && (
+            <BudgetForm
+                onSubmit={editingBudget ? handleUpdate : handleCreate}
+                initialData={editingBudget}
+            />
+        )}
 
         {/* List */}
-        <BudgetList budgets={budgets} onDelete={handleDelete} />
+        <BudgetList budgets={budgets} onDelete={handleDelete} onEdit={handleEdit} />
         </div>
     );
 }

@@ -32,7 +32,7 @@ export default function RecentTransaction({ transactions }: any) {
                                 <td className={`text-right ${
                                     t.type === "income"
                                         ? "text-green-500"
-                                        : "text-gray-700"
+                                        : "text-red-700"
                                 }`}>
                                     {t.type === "income" ? "+" : "-"} IDR {t.amount.toLocaleString("id-ID")}
                                 </td>

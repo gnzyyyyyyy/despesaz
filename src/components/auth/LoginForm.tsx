@@ -90,7 +90,10 @@ export default function LoginForm() {
 
             <p className="text-center text-xs text-gray-500">
                 Don't have an account?{" "}
-                <span className="font-semibold cursor-pointer">
+                <span
+                    onClick={() => router.push("/register")}
+                    className="font-semibold cursor-pointer text-[#1e6f9f] hover:underline"
+                >
                     Register here!
                 </span>
             </p>

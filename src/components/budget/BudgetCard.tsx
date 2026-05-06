@@ -1,9 +1,15 @@
-export default function BudgetCard({item, onDelete}: any) {
+export default function BudgetCard({item, onDelete, onEdit}: any) {
     const progress = item.limitAmount
         ? Math.min((item.spent / item.limitAmount) * 100, 100)
         : 0;
-        
-    const isOver = item.spent > item.limitAmount;
+
+    const percentage = item.limitAmount
+        ? (item.spent / item.limitAmount) * 100
+        : 0;
+
+    const isWarning = percentage >= 80 && percentage < 100;
+    const isOver = percentage >= 100;
+    
 
     return(
         <div className="bg-white p-6 rounded-2xl shadow-sm border">
@@ -25,15 +31,48 @@ export default function BudgetCard({item, onDelete}: any) {
                 </span>
             </div>
 
-            <div className="w-full h-2 bg-gray-100 rounded-full mb-3">
-                <div className={`h-2 rounded-full ${isOver ? "bg-red-500" : "bg-[#1e6f9f]"}`} style={{ width: `${progress}%` }}></div>
-            </div>
+            <div
+                className={`h-2 rounded-full ${
+                    isOver
+                    ? "bg-red-500"
+                    : isWarning
+                    ? "bg-yellow-500"
+                    : "bg-[#1e6f9f]"
+                }`}
+                style={{ width: `${Math.min(percentage, 100)}%` }}
+            ></div>
 
             <p className="text-sm text-gray-600 mb-4">
                 {item.notes || "No notes"}
             </p>
 
-            <button onClick={() => onDelete(item._id)} className="text-sm text-gray-400 hover:text-red-500">Remove Plan</button>
+            <div className="flex gap-4 mt-2">
+                <button
+                    onClick={() => onDelete(item._id)}
+                    className="text-sm text-gray-400 hover:text-red-500"
+                >
+                    Remove Plan
+                </button>
+
+                <button
+                    onClick={() => onEdit(item)}
+                    className="text-sm text-blue-500 hover:underline"
+                >
+                    Edit
+                </button>
+            </div>
+
+            {isWarning && (
+            <p className="text-yellow-600 text-sm mt-2 font-medium">
+                ⚠️ You have used {percentage.toFixed(0)}% of your budget
+            </p>
+            )}
+
+            {isOver && (
+            <p className="text-red-600 text-sm mt-2 font-semibold">
+                🚨 Budget exceeded!
+            </p>
+)}
         </div>
     )
 }

@@ -16,7 +16,7 @@ export default function ExpensePieChart({ transactions }: any) {
         value: grouped[key]
     }));
 
-    const COLORS = ["#7EC8E3", "#FF9E80", "#C3A6FF", "#FFD580"];
+    const COLORS = ["#7EC8E3", "#FF9E80", "#C3A6FF", "#FFD580", "#e37ead", "#ff8080", "#bbffa6", "#80c8ff" ];
 
     return (
         <div className="bg-white p-6 rounded-2xl shadow-sm">

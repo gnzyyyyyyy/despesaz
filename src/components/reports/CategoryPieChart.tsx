@@ -18,7 +18,7 @@ export default function CategoryPieChart({ transactions }: any) {
         value: grouped[key],
     }));
 
-    const COLORS = ["#1e6f9f", "#e74c3c", "#f39c12", "#2ecc71"];
+    const COLORS = ["#7EC8E3", "#FF9E80", "#C3A6FF", "#FFD580", "#e37ead", "#ff8080", "#bbffa6", "#80c8ff"];
 
     return (
         <div className="bg-white p-5 rounded-xl shadow-sm">

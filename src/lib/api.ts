@@ -20,6 +20,28 @@ export async function loginUser(data: {
     return result;
 }
 
+export async function registerUser(data: {
+    username: string;
+    email: string;
+    password: string;
+}) {
+    const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+        throw new Error(result.message || "Register failed");
+    }
+
+    return result;
+}
+
 // Transactions
 
 export async function createTransaction(data: any) {
@@ -135,6 +157,25 @@ export async function deleteBudget(id: string) {
     const res = await fetch(`/api/budgets/${id}`, {
         method: "DELETE",
         credentials: "include",
+    });
+
+    return res.json();
+}
+
+export async function getCurrentUser() {
+    const res = await fetch("/api/auth/users/me", {
+        credentials: "include",
+    });
+
+    return res.json();
+}
+
+export async function updateUser(data: any) {
+    const res = await fetch("/api/auth/users/me", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(data),
     });
 
     return res.json();
